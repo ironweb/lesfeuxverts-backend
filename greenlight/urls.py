@@ -4,13 +4,13 @@ from django.conf.urls import patterns, include, url
 import views
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'greenlight.views.home', name='home'),
-    # url(r'^greenlight/', include('greenlight.foo.urls')),
+	url(r'^services/$', views.ServicesView.as_view(), name='services'),
+	url(r'^requests/$', views.RequestsView.as_view(), name='requests'),
+	url(r'^requests/([\d\s]+)$', views.RequestView.as_view(), name='request'),
 )
 
-handler404 = views.NotFoundView.as_view()
-handler500 = views.InternalServerErrorView.as_view()
+handler404 = views.base.NotFoundView.as_view()
+handler500 = views.base.InternalServerErrorView.as_view()
 
 if settings.DEBUG:
 	# Monkey patch these handlers, it's the only way we can use our own when DEBUG = True
