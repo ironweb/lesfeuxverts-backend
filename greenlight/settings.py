@@ -23,7 +23,9 @@ ROOT_URLCONF = 'greenlight.urls'
 
 WSGI_APPLICATION = 'greenlight.wsgi.application'
 
-INSTALLED_APPS = ()
+INSTALLED_APPS = (
+	'django_extensions'
+)
 
 LOGGING = {
 	'version': 1,
