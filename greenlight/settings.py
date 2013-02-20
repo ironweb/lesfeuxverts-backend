@@ -27,6 +27,10 @@ INSTALLED_APPS = (
 	'django_extensions'
 )
 
+CORS_ORIGIN_WHITELIST = {
+	'greenlight.s3-website-us-east-1.amazonaws.com',
+}
+
 LOGGING = {
 	'version': 1,
 	'disable_existing_loggers': False,
