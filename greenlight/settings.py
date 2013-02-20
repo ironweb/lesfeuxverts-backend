@@ -29,6 +29,7 @@ INSTALLED_APPS = (
 
 CORS_ORIGIN_WHITELIST = {
 	'greenlight.s3-website-us-east-1.amazonaws.com',
+    'localhost',
 }
 
 LOGGING = {
