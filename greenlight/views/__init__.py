@@ -1,15 +1,14 @@
-from .base import APIView
+from three import Three
 from django.http import Http404
 
-from three import Three
+from .base import APIView
 
-class QCThree(Three):
-	def __init__(self):
-		self.endpoint = "http://dev-api.ville.quebec.qc.ca/open311/v2/"
-		self.format = "json"
-		self.jurisdiction = "ville.quebec.qc.ca"
+QC_three = Three(
+	endpoint = "http://dev-api.ville.quebec.qc.ca/open311/v2/",
+	format = "json",
+	jurisdiction = "ville.quebec.qc.ca",
+)
 
-QC_three = QCThree()
 
 class ServicesView(APIView):
 	def get(self, request):
