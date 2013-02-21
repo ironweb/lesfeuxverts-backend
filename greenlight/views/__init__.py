@@ -26,7 +26,7 @@ class ServiceView(APIView):
 
 class RequestsView(APIView):
 	def get(self, request):
-		return self.OkAPIResponse(QC_three.requests())
+		return self.OkAPIResponse(QC_three.requests(), **request.GET)
 
 
 	def post(self, request):
