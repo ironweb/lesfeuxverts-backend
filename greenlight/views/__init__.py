@@ -39,7 +39,7 @@ class RequestsView(APIView):
 		if open311_response.get('service_request_id') is not None:
 			location = reverse('request', args = (open311_response['service_request_id'],))
 		elif open311_response.get('token') is not None:
-			location = reverse('token', args = (open311_response['service_request_id'],))
+			location = reverse('token', args = (open311_response['token'],))
 		else:
 			location = None
 		
