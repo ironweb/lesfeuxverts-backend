@@ -1,5 +1,6 @@
 from three import Three
 
+from django.core.cache import cache
 from django.core.urlresolvers import reverse
 from django.http import Http404
 
@@ -15,13 +16,23 @@ QC_three = Three(
 
 class ServicesView(APIView):
 	def get(self, request):
-		return self.OkAPIResponse(QC_three.services())
+		cache_key = 'services'
+		services = cache.get(cache_key)
+		if services is None:
+			services = QC_three.services()
+			cache.set(cache_key, services, 3600) # Cache for one hour.
+		return self.OkAPIResponse(services)
 
 
 class ServiceView(APIView):
 
 	def get(self, request, id):
-		return self.OkAPIResponse(QC_three.services(id))
+		cache_key = 'service_{}'.format(id)
+		service = cache.get(cache_key)
+		if service is None:
+			service = QC_three.services(id)
+			cache.set(cache_key, service, 3600) # Cache for one hour.
+		return self.OkAPIResponse(service)
 
 
 class RequestsView(APIView):
