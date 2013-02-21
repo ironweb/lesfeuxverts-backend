@@ -36,9 +36,9 @@ class RequestsView(APIView):
 		if open311_response.get('code') == 'BadRequest':
 			return self.ErrorAPIResponse((open311_response['code'], open311_response['description']))
 		
-		if 'service_request_id' in open311_response:
+		if open311_response.get('service_request_id') is not None:
 			location = reverse('request', args = (open311_response['service_request_id'],))
-		elif 'token' in open311_response:
+		elif open311_response.get('token') is not None:
 			location = reverse('token', args = (open311_response['service_request_id'],))
 		else:
 			location = None
