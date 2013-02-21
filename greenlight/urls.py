@@ -5,6 +5,7 @@ import views
 
 urlpatterns = patterns('',
 	url(r'^services/$', views.ServicesView.as_view(), name='services'),
+	url(r'^services/([\w-]+)$', views.ServiceView.as_view(), name='service'),
 	url(r'^requests/$', views.RequestsView.as_view(), name='requests'),
 	url(r'^requests/([\d\s]+)$', views.RequestView.as_view(), name='request'),
 )

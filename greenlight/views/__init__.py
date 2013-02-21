@@ -51,3 +51,13 @@ class RequestView(APIView):
 		else:
 			raise Http404
 		
+
+class ServiceView(APIView):
+	
+	def get(self, request, id):
+		services = QC_three.services(id)
+		if services:
+			return self.OkAPIResponse(services)
+		else:
+			raise Http404
+		
