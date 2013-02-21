@@ -17,6 +17,7 @@ SECRET_KEY = '9&amp;@r*3hth4m=ml5t5tme0*(9^x@2xqo-ua^s+wg_ws(-^4-7@v'
 
 MIDDLEWARE_CLASSES = (
 	'django.middleware.common.CommonMiddleware',
+	'corsheaders.middleware.CorsMiddleware',
 )
 
 ROOT_URLCONF = 'greenlight.urls'
@@ -24,7 +25,8 @@ ROOT_URLCONF = 'greenlight.urls'
 WSGI_APPLICATION = 'greenlight.wsgi.application'
 
 INSTALLED_APPS = (
-	'django_extensions'
+	'django_extensions',
+	'corsheaders',
 )
 
 CORS_ORIGIN_ALLOW_ALL = True
