@@ -5,6 +5,7 @@ from django.http import Http404
 
 from .base import APIView
 
+
 QC_three = Three(
 	endpoint = "http://dev-api.ville.quebec.qc.ca/open311/v2/",
 	format = "json",
