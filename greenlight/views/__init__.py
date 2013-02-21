@@ -31,23 +31,25 @@ class RequestsView(APIView):
 
 	def post(self, request):
 		
-		open311_response = QC_three.post(**request.POST)[0]
+		open311_response = QC_three.post(**request.POST.items())[0]
 		
 		if open311_response.get('code') == 'BadRequest':
 			return self.ErrorAPIResponse((open311_response['code'], open311_response['description']))
 		
-		request_id = open311_response['service_request_id']
+		if 'service_request_id' in open311_response:
+			location = reverse('request', args = (open311_response['service_request_id'],))
+		elif 'token' in open311_response:
+			location = reverse('token', args = (open311_response['service_request_id'],))
+		else:
+			location = None
 		
-		if request_id is None:
-			return self.ErrorAPIResponse(('no_id', "What?", open311_response))
+		open311_response.update(location = location)
 		
-		location = reverse('request', args = (request_id,))
+		response = self.OkAPIResponse(open311_response, status = 201)
 		
-		response = self.OkAPIResponse({
-			'id': request_id,
-			'location': location
-		})
-		response['Location'] = location
+		if location is not None:
+			response['Location'] = location
+		
 		return response
 
 
@@ -59,4 +61,8 @@ class RequestView(APIView):
 			return self.OkAPIResponse(requests[0])
 		else:
 			raise Http404
-		
+
+
+class TokenView(APIView):
+	def get(self, request, id):
+		return self.OkAPIResponse(QC_three.token(id))
