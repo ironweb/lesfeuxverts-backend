@@ -28,7 +28,7 @@ class RequestsView(APIView):
 		open311_response = QC_three.post(**request.POST)[0]
 		
 		if open311_response.get('code') == 'BadRequest':
-			return self.ErrorAPIResponse(open311_response)
+			return self.ErrorAPIResponse((open311_response['code'], open311_response['description']))
 		
 		request_id = open311_response['service_request_id']
 		
