@@ -38,6 +38,9 @@ class RequestsView(APIView):
 		
 		request_id = open311_response['service_request_id']
 		
+		if request_id is None:
+			return self.ErrorAPIResponse(('no_id', "What?", open311_response))
+		
 		location = reverse('request', args = (request_id,))
 		
 		response = self.OkAPIResponse({
