@@ -18,6 +18,12 @@ class ServicesView(APIView):
 		return self.OkAPIResponse(QC_three.services())
 
 
+class ServiceView(APIView):
+
+	def get(self, request, id):
+		return self.OkAPIResponse(QC_three.services(id))
+
+
 class RequestsView(APIView):
 	def get(self, request):
 		return self.OkAPIResponse(QC_three.requests())
@@ -48,16 +54,6 @@ class RequestView(APIView):
 		requests = QC_three.request(id)
 		if requests:
 			return self.OkAPIResponse(requests[0])
-		else:
-			raise Http404
-		
-
-class ServiceView(APIView):
-	
-	def get(self, request, id):
-		services = QC_three.services(id)
-		if services:
-			return self.OkAPIResponse(services)
 		else:
 			raise Http404
 		
