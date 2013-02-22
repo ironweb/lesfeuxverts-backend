@@ -1,4 +1,5 @@
 from three import Three
+from hashlib import md5
 
 from django.core.cache import cache
 from django.core.urlresolvers import reverse
@@ -38,8 +39,7 @@ class ServiceView(APIView):
 class RequestsView(APIView):
 	def get(self, request):
 		return self.OkAPIResponse(QC_three.requests(**request.GET))
-
-
+	
 	def post(self, request):
 		
 		open311_response = QC_three.post(**request.POST)[0]
@@ -86,11 +86,20 @@ class StatsView(APIView):
 		if handler is None:
 			raise Http404
 		
-		cache_key = 'stats_' + type
+		# Include a unique but constant hash of all querystring arguments
+		# to make sure we're getting the right cached data.
+		cache_key = 'stats_{}_{}'.format(
+			type,
+			md5(','.join(
+				k + '=' + v for k, v in
+				sorted(request.GET.items())
+			)).hexdigest()
+		)
+		
 		result = cache.get(cache_key)
 		if result is None:
 			result = handler()
-			cache.set(cache_key, result)
+			cache.set(cache_key, result, 86400)
 		
 		return self.OkAPIResponse(result)
 	
