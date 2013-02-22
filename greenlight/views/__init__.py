@@ -77,3 +77,19 @@ class RequestView(APIView):
 class TokenView(APIView):
 	def get(self, request, id):
 		return self.OkAPIResponse(QC_three.token(id))
+
+class StatsView(APIView):
+	
+	def get(self, request, type):
+		handler = getattr(self, 'compute_' + type, None)
+		
+		if handler is None:
+			raise Http404
+		
+		cache_key = 'stats_' + type
+		result = cache.get(cache_key)
+		if result is None:
+			result = handler()
+			cache.set(cache_key, result)
+		
+		return self.OkAPIResponse(result)

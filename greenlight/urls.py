@@ -9,6 +9,7 @@ urlpatterns = patterns('',
 	url(r'^requests/$', views.RequestsView.as_view(), name='requests'),
 	url(r'^requests/([\d\s]+)$', views.RequestView.as_view(), name='request'),
 	url(r'^token/([\w-]+)$', views.TokenView.as_view(), name='token'),
+	url(r'^stats/(\w+)$', views.StatsView.as_view(), name='stats'),
 )
 
 handler404 = views.base.NotFoundView.as_view()
