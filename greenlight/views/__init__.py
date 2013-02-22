@@ -21,18 +21,17 @@ class ServicesView(APIView):
 		services = cache.get(cache_key)
 		if services is None:
 			services = QC_three.services()
-			cache.set(cache_key, services, 3600) # Cache for one hour.
+			cache.set(cache_key, services, 3600) # One hour.
 		return self.OkAPIResponse(services)
 
 
 class ServiceView(APIView):
-
 	def get(self, request, id):
 		cache_key = 'service_{}'.format(id)
 		service = cache.get(cache_key)
 		if service is None:
 			service = QC_three.services(id)
-			cache.set(cache_key, service, 3600) # Cache for one hour.
+			cache.set(cache_key, service, 3600) # One hour.
 		return self.OkAPIResponse(service)
 
 
@@ -99,7 +98,7 @@ class StatsView(APIView):
 		result = cache.get(cache_key)
 		if result is None:
 			result = handler()
-			cache.set(cache_key, result, 86400)
+			cache.set(cache_key, result, 3600) # One hour.
 		
 		return self.OkAPIResponse(result)
 	
