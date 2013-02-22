@@ -105,7 +105,7 @@ class StatsView(APIView):
 	
 	def compute_states(self):
 		requests = QC_three.requests(**self.request.GET)
-		statuses = [r['status'] for r in QC_three.requests()]
+		statuses = [r['status'] for r in requests]
 		closed_count = statuses.count('closed')
 		open_count = len(statuses) - closed_count
 		return {
