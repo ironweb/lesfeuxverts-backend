@@ -113,3 +113,7 @@ class StatsView(APIView):
 			'closed_count': closed_count,
 			'open_count': open_count,
 		}
+	
+	def compute_count(self):
+		return len(QC_three.requests(**self.request.GET))
+		
