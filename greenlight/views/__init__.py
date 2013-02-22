@@ -93,3 +93,14 @@ class StatsView(APIView):
 			cache.set(cache_key, result)
 		
 		return self.OkAPIResponse(result)
+	
+	def compute_states(self):
+		requests = QC_three.requests()
+		statuses = [r['status'] for r in QC_three.requests()]
+		closed_count = statuses.count('closed')
+		open_count = len(statuses) - closed_count
+		return {
+			'total': len(requests),
+			'closed_count': closed_count,
+			'open_count': open_count,
+		}
