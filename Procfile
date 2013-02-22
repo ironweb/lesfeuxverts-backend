@@ -1,1 +1,1 @@
-web: gunicorn -k gevent greenlight.wsgi
+web: gunicorn -k gevent -w 3 greenlight.wsgi
